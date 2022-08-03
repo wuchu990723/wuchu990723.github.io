@@ -43,7 +43,7 @@
                     for (var i = 0; i < data.items.length; i++) {
                         str += '<li style="list-style:none">'
                             + (data.items[i].login) + '<br/>'
-                            + '<img style="width:100px;height:100px" src=' + data.items[i].avatar_url + '/>'
+                            + ' <a href=' + data.items[i].html_url+'> <img  style="width:100px;height:100px" src=' + data.items[i].avatar_url + '/></a>'
                             + '</li>';
                     }
                     if (data.items.length == 0) {
