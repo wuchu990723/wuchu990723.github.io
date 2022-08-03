@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试fetch</title>
+</head>
+
+
+<body>
+    <div>
+        用户名：<input id="keyword" type="text">
+        <button onclick="TestFetch()">查询</button>
+        <div class="content">
+            <ul id="list">
+            </ul>
+        </div>
+
+    </div>
+    <style>
+        .content ul li {
+            float: left;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <script>
+
+        async function TestFetch() {
+            let keyword = document.getElementById('keyword');
+            if (keyword.value == '') {
+                alert('请输入用户名')
+            } else {
+                try {
+                    let url = 'https://api.github.com/search/users?q=' + keyword.value;
+                    const response = await fetch(url);
+                    let myTextarea = document.getElementById('myTextarea');
+                    let data = await response.json();
+                    let list = document.getElementById('list');
+                    var str = '';
+                    for (var i = 0; i < data.items.length; i++) {
+                        str += '<li style="list-style:none">'
+                            + (data.items[i].login) + '<br/>'
+                            + '<img style="width:100px;height:100px" src=' + data.items[i].avatar_url + '/>'
+                            + '</li>';
+                    }
+                    if (data.items.length == 0) {
+                        list.innerHTML = '<h1 style="color:red;">GitHub世界中不存在该用户！</h1>';
+                    } else {
+                        list.innerHTML = str;
+                    }
+
+
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+
+        }
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
