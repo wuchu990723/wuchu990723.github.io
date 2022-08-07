@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 引入字体和图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./person_card.css" />
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>个人卡片</title>
+</head>
+
+<body>
+    <!-- 总容器 -->
+    <div class="container">
+       
+        
+        <div class="search bar">
+            <input onblur="TestFetch()" id="keyword" type="text" placeholder="请输入Github用户名">
+        </div>
+        <div class="list">
+            <ul  id="list">
+            </ul>
+        </div>
+    </div>
+  
+</body>
+
+<script>
+    async function TestFetch() {
+        let keyword = document.getElementById('keyword');
+        if (keyword.value == '') {
+            alert('请输入用户名')
+        } else {
+            try {
+                let url = 'https://api.github.com/search/users?q=' + keyword.value;
+                const response = await fetch(url);
+                let myTextarea = document.getElementById('myTextarea');
+                let data = await response.json();
+                console.log(data);
+                let list = document.getElementById('list');
+                var str = '';
+                for (var i = 0; i < data.items.length; i++) {
+                    str += '<li style="list-style:none">'+ 
+                        ' <div class="card"> '+ 
+                            '<div class="circle">'+
+                                ' <div class="avatar">'+
+                                    '<img src=' + data.items[i].avatar_url + '/>'+ 
+                                '</div>'+
+                            '</div>'+
+                            '<div class="content">'+
+                                '<a href="#"><i class="fa fa-github" aria-hidden="true"></i></i></a>'+
+                                '<h3>'+data.items[i].login +'</h3>'+
+                                '<div class="textIcon">'+
+                                    '<h5>'+data.items[i].html_url +'</h5>'+
+                                    '<a href=' + data.items[i].html_url+' target="_blank"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>'
+                        + '</li>';
+                }
+                if (data.items.length == 0) {
+                    alert('GitHub世界中不存在该用户！')
+                } else {
+                    list.innerHTML = str;
+                }
+
+
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+</script>
+
+</html>

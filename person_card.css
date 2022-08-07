@@ -1,0 +1,180 @@
+/* 引入谷歌字体 */
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
+
+/* 去掉浏览器自带的边距 */
+* {
+    padding: 0;
+    margin: 0;
+    /* 元素的总高度和宽度包含内边距和边框(padding 与 border) : 防止加了边距撑开了盒子 */
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.container {
+    /* 弹性布局*/
+    /* display:flex; */
+    /* 元素水平居中对齐 */
+    justify-content: center;
+    /* 元素垂直居中对齐 */
+    align-items: center;
+    /* 视窗高度的百分比 */
+    min-height: 100vh;
+    /* 背景色为渐变色 */
+    background: radial-gradient(#777, #222);
+}
+
+.container .bar {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+    
+}
+
+.container .bar input {
+    border: 2px solid #c5464a;
+    border-radius:  50px;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    background: transparent;
+    top: 0;
+    right: 0;
+    width: 550px;
+    height: 50px;
+}
+
+.container ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.container ul li {
+    float: left;
+    padding: 20px 20px;
+}
+
+.container .card {
+    /* 将卡片的区域设为相对布局 */
+    position: relative;
+    /* 卡片的大小 */
+    width: 340px;
+    height: 450px;
+    /* 卡片背景色 */
+    background: #fff;
+    /* 卡片的圆角 */
+    border-radius: 10px;
+    /* 将超出父容器的部分隐藏 */
+    overflow: hidden;
+}
+
+.container .card .circle {
+    /* 由于父容器设置了相对布局，子容器就可以设置绝对布局 */
+    position: absolute;
+    /* 定位在顶部190px的位置 */
+    top: -190px;
+    /* 图片左侧居中 */
+    left: 50%;
+    /* 这个跟left配合可以让图片在card的中间位置 */
+    transform: translateX(-50%);
+    /* 设置卡片的高和宽 */
+    width: 500px;
+    height: 500px;
+    /* 卡片区域的背景色 */
+    background: #333;
+    /* 裁剪一张图以圆的形式显示，圆外面的部分隐藏 */
+    clip-path: circle();
+}
+
+/* ::before 在circle的前面加上一个伪元素 */
+/* 在这里用来实现头像的下侧的透明曲边部分 */
+.container .card .circle::before {
+    /* 伪元素中的文字内容 */
+    content: "";
+    /* 绝对布局 */
+    position: absolute;
+    top: -8px;
+    left: -16px;
+    width: 100%;
+    height: 100%;
+    /* 背景透明 */
+    background: transparent;
+    /* 阴影颜色 */
+    box-shadow: 0 0 0 20px rgba(255, 0, 0, 0.5);
+    /* 圆形 */
+    border-radius: 50%;
+    /* 层级设置为100(只要比头像高就行) */
+    z-index: 100;
+    /* 防止鼠标移动到头像的hover失效*/
+    pointer-events: none;
+}
+
+.container .card .circle .avatar {
+    position: absolute;
+    /* 定位在底部 */
+    bottom: 0;
+    /* 图片在circle中居中 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 310px;
+    background: #ff0;
+}
+
+.container .card .circle .avatar img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+    /* transform-origin：表示放大的位置，默认中间放大*/
+    /* transform-origin: bottom; */
+
+}
+
+/* 鼠标移动到头像放大 */
+.container .card .circle .avatar:hover img {
+    transform: scale(1.5);
+}
+
+.container .card .content {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 140px;
+    padding: 20px 30px;
+}
+
+.container .card .content .fa-github {
+    background: #0077b5;
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+
+.container .card .content h3 {
+    font-size: 1.4em;
+    color: #333;
+    margin-top: 7px;
+}
+
+.container .card .content .textIcon {
+    display: flex;
+    /* 一边一个 */
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding: 0 2px;
+}
+
+.container .card .content .textIcon h5 {
+    color: #e91e63;
+    font-weight: 400;
+}
+
+.container .card .content .textIcon a {
+    color: #e91e63;
+}
